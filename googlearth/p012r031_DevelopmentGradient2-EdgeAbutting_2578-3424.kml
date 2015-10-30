@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document><Folder><name>p012r031_2768_4074_urbangradient2</name>
+<Schema name="p012r031_2768_4074_urbangradient2" id="p012r031_2768_4074_urbangradient2">
+	<SimpleField name="Name" type="string"></SimpleField>
+	<SimpleField name="Description" type="string"></SimpleField>
+	<SimpleField name="row" type="int"></SimpleField>
+	<SimpleField name="col" type="int"></SimpleField>
+</Schema>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#p012r031_2768_4074_urbangradient2">
+		<SimpleData name="row">2767</SimpleData>
+		<SimpleData name="col">4073</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>-71.455092725247738,42.033437345754344 -71.454730626982283,42.033445094943808 -71.454720233417646,42.033175144933814 -71.455082330153701,42.033167395817273 -71.455092725247738,42.033437345754344</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+</Folder></Document></kml>

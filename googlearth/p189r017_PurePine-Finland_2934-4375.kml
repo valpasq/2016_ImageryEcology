@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document><Folder><name>p189r017_PurePine_2934_4375</name>
+<Schema name="p189r017_PurePine_2934_4375" id="p189r017_PurePine_2934_4375">
+	<SimpleField name="Name" type="string"></SimpleField>
+	<SimpleField name="Description" type="string"></SimpleField>
+	<SimpleField name="row" type="int"></SimpleField>
+	<SimpleField name="col" type="int"></SimpleField>
+</Schema>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#p189r017_PurePine_2934_4375">
+		<SimpleData name="row">2933</SimpleData>
+		<SimpleData name="col">4374</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>24.310529499046918,61.814297400829325 24.311098177248738,61.814308537785379 24.311121717855787,61.814039529653421 24.310553044617961,61.814028392822379 24.310529499046918,61.814297400829325</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+</Folder></Document></kml>

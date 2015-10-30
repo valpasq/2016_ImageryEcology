@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document><Folder><name>p189r017_PureBirch_2775_4367</name>
+<Schema name="p189r017_PureBirch_2775_4367" id="p189r017_PureBirch_2775_4367">
+	<SimpleField name="Name" type="string"></SimpleField>
+	<SimpleField name="Description" type="string"></SimpleField>
+	<SimpleField name="row" type="int"></SimpleField>
+	<SimpleField name="col" type="int"></SimpleField>
+</Schema>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#p189r017_PureBirch_2775_4367">
+		<SimpleData name="row">2774</SimpleData>
+		<SimpleData name="col">4366</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>24.302224017557982,61.856980133104415 24.302793482505326,61.856991308816241 24.302817138026136,61.856722304201803 24.302247678058443,61.856711128615551 24.302224017557982,61.856980133104415</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+</Folder></Document></kml>

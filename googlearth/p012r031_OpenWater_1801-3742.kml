@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document><Folder><name>p012r031_1991_4392_OpenWater</name>
+<Schema name="p012r031_1991_4392_OpenWater" id="p012r031_1991_4392_OpenWater">
+	<SimpleField name="Name" type="string"></SimpleField>
+	<SimpleField name="Description" type="string"></SimpleField>
+	<SimpleField name="row" type="int"></SimpleField>
+	<SimpleField name="col" type="int"></SimpleField>
+</Schema>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#p012r031_1991_4392_OpenWater">
+		<SimpleData name="row">1990</SimpleData>
+		<SimpleData name="col">4391</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>-71.347678595733541,42.24560833306149 -71.347315258037412,42.24561577349116 -71.347305244890748,42.245345812228983 -71.347668581040409,42.245338371869288 -71.347678595733541,42.24560833306149</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+</Folder></Document></kml>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document><Folder><name>p125r053_5844_5225_mangrove</name>
+<Schema name="p125r053_5844_5225_mangrove" id="p125r053_5844_5225_mangrove">
+	<SimpleField name="Name" type="string"></SimpleField>
+	<SimpleField name="Description" type="string"></SimpleField>
+	<SimpleField name="row" type="int"></SimpleField>
+	<SimpleField name="col" type="int"></SimpleField>
+</Schema>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#p125r053_5844_5225_mangrove">
+		<SimpleData name="row">5843</SimpleData>
+		<SimpleData name="col">5224</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>106.231760642391606,9.504101420450064 106.232033908416355,9.504100457206794 106.232032938035289,9.503829175227901 106.231759672225635,9.503830138443185 106.231760642391606,9.504101420450064</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+</Folder></Document></kml>

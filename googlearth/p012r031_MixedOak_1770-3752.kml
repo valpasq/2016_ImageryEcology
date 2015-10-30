@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document><Folder><name>p012r031_MixedOak_1770_3752</name>
+<Schema name="p012r031_MixedOak_1770_3752" id="p012r031_MixedOak_1770_3752">
+	<SimpleField name="Name" type="string"></SimpleField>
+	<SimpleField name="Description" type="string"></SimpleField>
+	<SimpleField name="row" type="int"></SimpleField>
+	<SimpleField name="col" type="int"></SimpleField>
+</Schema>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#p012r031_MixedOak_1770_3752">
+		<SimpleData name="row">1769</SimpleData>
+		<SimpleData name="col">3751</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>-71.344355256710983,42.254051496966468 -71.343991869691365,42.25405892806301 -71.343981867757662,42.253788966556705 -71.344345253230131,42.253781535530038 -71.344355256710983,42.254051496966468</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+</Folder></Document></kml>

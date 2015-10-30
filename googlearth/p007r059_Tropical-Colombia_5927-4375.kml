@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document><Folder><name>p007r059_5927_4375_Colombia</name>
+<Schema name="p007r059_5927_4375_Colombia" id="p007r059_5927_4375_Colombia">
+	<SimpleField name="Name" type="string"></SimpleField>
+	<SimpleField name="Description" type="string"></SimpleField>
+	<SimpleField name="row" type="int"></SimpleField>
+	<SimpleField name="col" type="int"></SimpleField>
+</Schema>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#p007r059_5927_4375_Colombia">
+		<SimpleData name="row">5926</SimpleData>
+		<SimpleData name="col">4374</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>-73.553030581632584,0.98615625149681 -73.552761026112506,0.986156133526375 -73.55276114330556,0.985884802086679 -73.553030698803838,0.98588492002465 -73.553030581632584,0.98615625149681</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+</Folder></Document></kml>

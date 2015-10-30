@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document><Folder><name>p012r031_1954_4438_EmergentWetland</name>
+<Schema name="p012r031_1954_4438_EmergentWetland" id="p012r031_1954_4438_EmergentWetland">
+	<SimpleField name="Name" type="string"></SimpleField>
+	<SimpleField name="Description" type="string"></SimpleField>
+	<SimpleField name="row" type="int"></SimpleField>
+	<SimpleField name="col" type="int"></SimpleField>
+</Schema>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#p012r031_1954_4438_EmergentWetland">
+		<SimpleData name="row">1953</SimpleData>
+		<SimpleData name="col">4437</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>-71.33133292729174,42.255938075135298 -71.330969526063114,42.255945465238767 -71.330959579008891,42.255675501311885 -71.33132297869021,42.255668111277913 -71.33133292729174,42.255938075135298</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+</Folder></Document></kml>

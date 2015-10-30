@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document><Folder><name>p012r031_1613_5027_100Impervious</name>
+<Schema name="p012r031_1613_5027_100Impervious" id="p012r031_1613_5027_100Impervious">
+	<SimpleField name="Name" type="string"></SimpleField>
+	<SimpleField name="Description" type="string"></SimpleField>
+	<SimpleField name="row" type="int"></SimpleField>
+	<SimpleField name="col" type="int"></SimpleField>
+</Schema>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#p012r031_1613_5027_100Impervious">
+		<SimpleData name="row">1612</SimpleData>
+		<SimpleData name="col">5026</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>-71.1203555051829,42.352161761295626 -71.119991497964321,42.35216849518816 -71.119982420274397,42.351898497093728 -71.120346425937157,42.351891763264497 -71.1203555051829,42.352161761295626</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+</Folder></Document></kml>

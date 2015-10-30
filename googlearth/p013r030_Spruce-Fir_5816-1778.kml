@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document><Folder><name>p013r030_Spruce_Fir_5816_1778</name>
+<Schema name="p013r030_Spruce_Fir_5816_1778" id="p013r030_Spruce_Fir_5816_1778">
+	<SimpleField name="Name" type="string"></SimpleField>
+	<SimpleField name="Description" type="string"></SimpleField>
+	<SimpleField name="row" type="int"></SimpleField>
+	<SimpleField name="col" type="int"></SimpleField>
+</Schema>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#p013r030_Spruce_Fir_5816_1778">
+		<SimpleData name="row">5815</SimpleData>
+		<SimpleData name="col">1777</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>-73.077831657605742,42.557469959412792 -73.07746641491822,42.557463829838497 -73.077474706778801,42.557193808539665 -73.077839947893423,42.557199938056364 -73.077831657605742,42.557469959412792</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+</Folder></Document></kml>

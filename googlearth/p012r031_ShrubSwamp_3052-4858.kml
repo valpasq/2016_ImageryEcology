@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document><Folder><name>p012r031_3242_5508_ShrubSwamp</name>
+<Schema name="p012r031_3242_5508_ShrubSwamp" id="p012r031_3242_5508_ShrubSwamp">
+	<SimpleField name="Name" type="string"></SimpleField>
+	<SimpleField name="Description" type="string"></SimpleField>
+	<SimpleField name="row" type="int"></SimpleField>
+	<SimpleField name="col" type="int"></SimpleField>
+</Schema>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#p012r031_3242_5508_ShrubSwamp">
+		<SimpleData name="row">3241</SimpleData>
+		<SimpleData name="col">5507</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>-70.931833742166219,41.915374414847378 -70.931472185322107,41.915380499194598 -70.931464040106775,41.915110448991534 -70.931825595428478,41.915104364701619 -70.931833742166219,41.915374414847378</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+</Folder></Document></kml>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document><Folder><name>2826_5201_Failed_development_succeeds</name>
+<Schema name="2826_5201_Failed_development_succeeds" id="2826_5201_Failed_development_succeeds">
+	<SimpleField name="Name" type="string"></SimpleField>
+	<SimpleField name="Description" type="string"></SimpleField>
+	<SimpleField name="row" type="int"></SimpleField>
+	<SimpleField name="col" type="int"></SimpleField>
+</Schema>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#2826_5201_Failed_development_succeeds">
+		<SimpleData name="row">2825</SimpleData>
+		<SimpleData name="col">5200</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>-71.046420004659666,42.025784837664176 -71.046057848112383,42.0257912964857 -71.046049186426416,42.025521270283512 -71.046411341443161,42.025514811522797 -71.046420004659666,42.025784837664176</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+</Folder></Document></kml>

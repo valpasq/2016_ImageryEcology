@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document><Folder><name>p012r031_1612_5034_Agganischange</name>
+<Schema name="p012r031_1612_5034_Agganischange" id="p012r031_1612_5034_Agganischange">
+	<SimpleField name="Name" type="string"></SimpleField>
+	<SimpleField name="Description" type="string"></SimpleField>
+	<SimpleField name="row" type="int"></SimpleField>
+	<SimpleField name="col" type="int"></SimpleField>
+</Schema>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#p012r031_1612_5034_Agganischange">
+		<SimpleData name="row">1611</SimpleData>
+		<SimpleData name="col">5033</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>-71.11781652051593,42.352478872753522 -71.117452510869541,42.352485598626089 -71.117443443945874,42.352215600103115 -71.117807452036416,42.35220887429378 -71.11781652051593,42.352478872753522</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+</Folder></Document></kml>

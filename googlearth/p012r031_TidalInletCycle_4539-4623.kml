@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document><Folder><name>p012r031_4729_5273_TidalInletCycle</name>
+<Schema name="p012r031_4729_5273_TidalInletCycle" id="p012r031_4729_5273_TidalInletCycle">
+	<SimpleField name="Name" type="string"></SimpleField>
+	<SimpleField name="Description" type="string"></SimpleField>
+	<SimpleField name="row" type="int"></SimpleField>
+	<SimpleField name="col" type="int"></SimpleField>
+</Schema>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#p012r031_4729_5273_TidalInletCycle">
+		<SimpleData name="row">4728</SimpleData>
+		<SimpleData name="col">5272</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>-71.004277881424301,41.512353331291656 -71.003918591747563,41.512359594562263 -71.003910259771942,41.512089537118015 -71.00426954795725,41.512083273906505 -71.004277881424301,41.512353331291656</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+</Folder></Document></kml>

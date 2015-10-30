@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document><Folder><name>p006r060_4415_2034_Colombia</name>
+<Schema name="p006r060_4415_2034_Colombia" id="p006r060_4415_2034_Colombia">
+	<SimpleField name="Name" type="string"></SimpleField>
+	<SimpleField name="Description" type="string"></SimpleField>
+	<SimpleField name="row" type="int"></SimpleField>
+	<SimpleField name="col" type="int"></SimpleField>
+</Schema>
+  <Placemark>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#p006r060_4415_2034_Colombia">
+		<SimpleData name="row">4414</SimpleData>
+		<SimpleData name="col">2033</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>-72.944500092427049,-0.049773198536916 -72.944230664567257,-0.049773190079343 -72.94423065614285,-0.050044433620541 -72.944500084003749,-0.050044442124204 -72.944500092427049,-0.049773198536916</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+</Folder></Document></kml>

@@ -7,11 +7,11 @@
 
 %% SET code and image directories
 % Directory where script and functions are stored
-toolsdir='/usr3/graduate/valpasq/Documents/Chapter1/TS-plots/Tools/';
+toolsdir='/usr3/graduate/valpasq/Documents/Chapter1/Plot_code/Tools/';
 addpath(toolsdir);
-addpath('/usr3/graduate/valpasq/Documents/Chapter1/TS-plots/Tools/export_fig/');
+addpath('/usr3/graduate/valpasq/Documents/Chapter1/Plot_code/Tools/export_fig/');
 
-codedir='/usr3/graduate/valpasq/Documents/Chapter1/TS-plots/Scripts/';
+codedir='/usr3/graduate/valpasq/Documents/Chapter1/Plot_code/Scripts/';
 addpath(codedir);
 
 % Directory containing time series of Landsat images
@@ -35,7 +35,7 @@ WRS='p012r031';
 %imagedir='/projectnb/landsat/projects/Vietnam/p125r053/images/';
 %WRS='p125r053';
 
-savedir='/usr3/graduate/valpasq/Documents/Chapter1/figures/abrupt_change/';
+savedir='/usr3/graduate/valpasq/Documents/Chapter1/figures/example/';
 
 % name of stack image e.g. L4012031_03119821231_MTLstack
 %stk_n = '_stack'; % original stack format
@@ -45,8 +45,8 @@ stk_n = '_all';  % stacked with BGW
 %% INPUTS: CONTROL PLOT INPUTS
 
 % SPECIFY Pixel coordinates
-N_row = 4156 % row
-N_col = 5933 % column
+N_row = 1765 % row
+N_col = 3821 % column
 
 % SPECIFY data type: 'band ' or 'vi' or 'TC'
 % NOTE:if datatype=='vi', must use vi version of multi-temp cloud masking
@@ -78,8 +78,8 @@ multitempcloud='off';
 markcolor='k'; % marker color for solid plots
 
 % TURN VERTICAL DATE LINES ON/OFF
-geplot='on';
-%geplot='off';
+%geplot='on';
+geplot='off';
 
 % SPECIFY dates for any Google Earth (validation) images
 gedate=datenum('03/09/1995');  % add vertical line for a particular date (1)
@@ -96,8 +96,8 @@ thresh=5000;
 % Specify TS plot style and DOY plot style
 
 %TSplottype='solid';   % all observations one color
-%TSplottype='years';   % observations symbolized by year
-TSplottype='seasons'; % observations symbolized by season
+TSplottype='years';   % observations symbolized by year
+%TSplottype='seasons'; % observations symbolized by season
 %TSplottype='thresh';   % observations symbolized based on fixed threshhold
 
 %DOYplottype='black';   % one panel, all points in black
@@ -105,8 +105,8 @@ DOYplottype='years';   % one panel, symbolized by year
 %DOYplottype='seasons';  % one panel, symbolized by season
 
 % OUTPUT:
-plotout='combined';
-%plotout='separate';
+%plotout='combined';
+plotout='separate';
 
 
 %% READ in X data (image dates) and Y data (reflectance values)
@@ -177,7 +177,7 @@ fmask_clear=line_m(fmask_clear);
 % SPECIFY growing season start & end
 spr_early=120;
 spr_late=150;
-fall_early=260;
+fall_early=280;
 fall_late=310;
 
 %% SEQUENTIAL DATE plot
@@ -202,7 +202,7 @@ for j=1:length(B_plotvec)
 
         case 'separate'
             figure()
-            set(gcf,'Position',[0 500 1500 500]);
+            set(gcf,'Position',[0 500 1000 500]);
     end
    
     set(gca,'FontSize',18)
@@ -337,7 +337,7 @@ for j=1:length(B_plotvec)
             
         case 'separate'
             figure()
-            set(gcf,'Position',[0 0 650 500]);
+            set(gcf,'Position',[0 0 500 500]);
     end
             
     set(gca,'FontSize',20)%,'FontWeight','bold')
@@ -346,7 +346,7 @@ for j=1:length(B_plotvec)
     switch DOYplottype
         case 'years'
             hold on
-            set(gca,'YTickLabel',[]);
+            %set(gca,'YTickLabel',[]);
             colormap(jet(range(1980:2016)));
             color_tab=(jet(range(1980:2016)));
             
@@ -368,11 +368,11 @@ for j=1:length(B_plotvec)
             
             %plot(gedateDOY,B_min:B_max,'m-')
             
-            colorbar
-            h = colorbar;
-            set(h,'fontsize',16);
+            %colorbar
+            %h = colorbar;
+            %set(h,'fontsize',16);
             
-            ylabel(h, ['Years since ',num2str(year_i)],'FontSize',20)
+            %ylabel(h, ['Years since ',num2str(year_i)],'FontSize',20)
             
             xlabel('Day of Year','FontSize',18,'FontWeight','bold','Color','k')
             xlim([0 365])
@@ -387,7 +387,7 @@ for j=1:length(B_plotvec)
             
         case 'seasons'
             hold on
-            set(gca,'YTickLabel',[]);
+            %set(gca,'YTickLabel',[]);
             for i=1:length(doy)
                 if doy(i) > fall_late || doy(i) <= spr_early
                     plot(doy(i),clry(i,B_plot),'bo','Markersize',6,'MarkerFaceColor','b')
@@ -403,10 +403,10 @@ for j=1:length(B_plotvec)
             
             %plot(gedateDOY,B_min:B_max,'m-')
             
-            plot(spr_early,B_min:B_max,'b-')
-            plot(spr_late,B_min:B_max,'g-')
-            plot(fall_early,B_min:B_max,'g-')
-            plot(fall_late,B_min:B_max,'b-')
+            %plot(spr_early,B_min:B_max,'b-')
+            %plot(spr_late,B_min:B_max,'g-')
+            %plot(fall_early,B_min:B_max,'g-')
+            %plot(fall_late,B_min:B_max,'b-')
                 
     end
     
@@ -422,17 +422,17 @@ for j=1:length(B_plotvec)
             if B_num == 6
                 %ylabel(['Band ',num2str(B_num),' Brightness Temperature (^oCX10^2)']);
             elseif B_plot == 8
-                %ylabel('TC Brightness x 10000','FontSize',20,'FontWeight','bold','Color','k');
+                ylabel('TC Brightness x 10000','FontSize',20,'FontWeight','bold','Color','k');
                 %text(5,9500,['Total observations (',num2str(min(obs_year)),'-',...
                 %    num2str(max(obs_year)),') = ',num2str(length(fmask_all))],'FontSize', 16)
                 %text(5,9000,['Clear observations = ',num2str(length(fmask_clear))],'FontSize', 16)    
             elseif B_plot == 9
-                %ylabel('TC Greenness x 10000','FontSize',20,'FontWeight','bold','Color','k');
+                ylabel('TC Greenness x 10000','FontSize',20,'FontWeight','bold','Color','k');
                 %text(5,4500,['Total observations (',num2str(min(obs_year)),'-',...
                 %    num2str(max(obs_year)),') = ',num2str(length(fmask_all))],'FontSize', 16)
                 %text(5,4200,['Clear observations = ',num2str(length(fmask_clear))],'FontSize', 16)                
             elseif B_plot == 10
-                %ylabel('TC Wetness x 10000','FontSize',20,'FontWeight','bold','Color','k');
+                ylabel('TC Wetness x 10000','FontSize',20,'FontWeight','bold','Color','k');
                 %text(5,-4200,['Total observations (',num2str(min(obs_year)),'-',...
                 %    num2str(max(obs_year)),') = ',num2str(length(fmask_all))],'FontSize', 16)
                 %text(5,-4500,['Clear observations = ',num2str(length(fmask_clear))],'FontSize', 16)  
@@ -509,7 +509,7 @@ switch plotout
     case 'combined'
         SaveAllFigures_TC_Combined
     case 'separate'
-        SaveAllFigures_TC_DOYonly
+        SaveAllFigures_TC_separate
 end
 
 close all

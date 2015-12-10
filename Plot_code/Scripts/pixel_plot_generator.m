@@ -96,12 +96,14 @@ thresh=5000;
 % Specify TS plot style and DOY plot style
 
 %TSplottype='solid';   % all observations one color
-TSplottype='years';   % observations symbolized by year
+%TSplottype='years';   % observations symbolized by year
+TSplottype='months'; % observations symbolized by month
 %TSplottype='seasons'; % observations symbolized by season
 %TSplottype='thresh';   % observations symbolized based on fixed threshhold
 
 %DOYplottype='black';   % one panel, all points in black
-DOYplottype='years';   % one panel, symbolized by year
+%DOYplottype='years';   % one panel, symbolized by year
+DOYplottype='months'; % observations symbolized by month
 %DOYplottype='seasons';  % one panel, symbolized by season
 
 % OUTPUT:
@@ -161,9 +163,11 @@ switch datatype
         
 end
 
-%% Calculate DOY & Year
+%% Calculate DOY & Year & Month
 doy=clrx-datenum(year(clrx),1,1)+1;
 obs_year=year(clrx);
+obs_month=month(clrx);
+
 
 %% Extract fmask values for reporting # observation stats
 fmask_all=(line_m<255);
@@ -222,7 +226,23 @@ for j=1:length(B_plotvec)
                 else plot(clrx(i),clry(i,B_plot),'ko','Markersize',6')
                     
                 end
-            end  
+            end
+            
+        case 'months'
+            colormap(hsv(12));
+            color_tab=hsv(12);
+            
+            month_i=1;
+            for k=1:12
+                for i=1:length(clrx)
+                    if obs_month(i) == month_i
+                        plot(clrx(i),clry(i,B_plot),'ko','Markersize',6,...
+                            'MarkerEdgeColor',color_tab(k,:),'MarkerFaceColor',color_tab(k,:))
+                    else continue
+                    end
+                end
+                month_i=month_i+1;
+            end
             
         case 'thresh'
             for i=1:length(doy)
@@ -344,6 +364,23 @@ for j=1:length(B_plotvec)
     
     
     switch DOYplottype
+        case 'months'
+            hold on
+            colormap(hsv(12));
+            color_tab=hsv(12);
+            
+            month_i=1;
+            for k=1:12
+                for i=1:length(doy)
+                    if obs_month(i) == month_i
+                        plot(doy(i),clry(i,B_plot),'ko','Markersize',6,...
+                            'MarkerEdgeColor',color_tab(k,:),'MarkerFaceColor',color_tab(k,:))
+                    else continue
+                    end
+                end
+                month_i=month_i+1;
+            end
+        
         case 'years'
             hold on
             %set(gca,'YTickLabel',[]);
@@ -500,11 +537,16 @@ end
 %ylim([0 25])
 
 
-%% Save plots
-
+%% SAVE directory
 % Save directory:
 cd(savedir)
 
+%% Save CSV
+csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clrx.csv'],clrx)
+csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clry.csv'],clry)
+
+
+%% SAVE plots
 switch plotout
     case 'combined'
         SaveAllFigures_TC_Combined
@@ -514,6 +556,6 @@ end
 
 close all
 
-clear
+%clear
 
 

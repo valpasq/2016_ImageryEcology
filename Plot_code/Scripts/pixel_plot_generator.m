@@ -17,8 +17,8 @@ addpath(codedir);
 % Directory containing time series of Landsat images
 %imagedir='/projectnb/buchans/students/valpasq/5km/p012r031/images/';
 
-imagedir='/projectnb/landsat/projects/Massachusetts/p012r031/images/'
-WRS='p012r031';
+%imagedir='/projectnb/landsat/projects/Massachusetts/p013r030/images/'
+%WRS='p013r030';
 
 %imagedir='/projectnb/landsat/projects/CMS/stacks/Colombia/p008r056/images/'
 %WRS='p008r056';
@@ -29,47 +29,34 @@ WRS='p012r031';
 %imagedir='/projectnb/landsat/projects/Colombia/images/006060/images/'
 %WRS='p006r060'; 
 
-%imagedir='/projectnb/landsat/projects/Finland/189017/images/';
-%WRS='p189r017';
+imagedir='/projectnb/landsat/projects/Finland/189017/images/';
+WRS='p189r017';
 
 %imagedir='/projectnb/landsat/projects/Vietnam/p125r053/images/';
 %WRS='p125r053';
 
-savedir='/usr3/graduate/valpasq/Documents/Chapter1/figures/example/';
-
-% name of stack image e.g. L4012031_03119821231_MTLstack
-%stk_n = '_stack'; % original stack format
-stk_n = '_all';  % stacked with BGW
-
+%% SPECIFY Save directory for plots and CSV files
+savedir='/usr3/graduate/valpasq/Documents/Chapter1/figures/forest/';
 
 %% INPUTS: CONTROL PLOT INPUTS
 
 % SPECIFY Pixel coordinates
-N_row = 1765 % row
-N_col = 3821 % column
+N_row = 2775 % row
+N_col = 4367 % column
 
-% SPECIFY data type: 'band ' or 'vi' or 'TC'
-% NOTE:if datatype=='vi', must use vi version of multi-temp cloud masking
-%datatype='TC';
-datatype='band';
+%% SPECIFY DATA TYPE 
 
-%nbands=8;
-nbands=11;
+% CASE 1: stack with just 7 original bands + Fmask (8 bands)
+stk_n = '_stack'; % original stack format
+datatype='TC';  % need to transform to TC
+nbands=8;
+B_plotvec=[1 2 3];
 
-% SPECIFY band to plot
-%B_plotvec=[1 2 3];
-B_plotvec=[8 9 10];
-
-%    'band'   / 'TC'
-% 1 - Blue    / Brightness
-% 2 - Green   / Greenness
-% 3 - Red     / Wetness
-% 4 - NIR     / TC 4
-% 5 - SWIR1   / TC 5
-% 6 - SWIR2   / TC 6
-% 7 - Thermal / dummy -don't use!
-% 8 - Fmask   / Fmask
-
+% CASE 2: stack that includes 7 bands + BGW + Fmask (11 bands)
+%stk_n = '_all';  % stacked with BGW - 10 bands total, use 'band' option
+%datatype='band';  % TC band available in stack - direct read
+%nbands=11;
+%B_plotvec=[8 9 10];
 
 % SPECIFY whether to use multitemporal cloud masking procedure
 multitempcloud='off';
@@ -158,6 +145,7 @@ switch datatype
                 clry=clry_TC(idgood,:);
                 
             case 'off'
+                clry_orig=clry;
                 clry=clry_TC;
         end
         
@@ -542,16 +530,26 @@ end
 cd(savedir)
 
 %% Save CSV
-csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clrx.csv'],clrx)
-csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clry.csv'],clry)
+
+switch datatype
+    case 'band'
+        csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clrx.csv'],clrx)
+        csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clry.csv'],clry(:, 1:7))
+        csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clry_BGW.csv'],clry(:, 8:10))
+        
+    case 'TC'
+        csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clrx.csv'],clrx)
+        csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clry.csv'],clry_orig(:, 1:7))
+        csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clry_BGW.csv'],clry(:, 1:3))
+end
 
 
 %% SAVE plots
 switch plotout
     case 'combined'
-        SaveAllFigures_TC_Combined
+        %SaveAllFigures_TC_Combined
     case 'separate'
-        SaveAllFigures_TC_separate
+        %SaveAllFigures_TC_separate
 end
 
 close all

@@ -5,7 +5,7 @@
 
 % Author: Valerie Pasquarella
 
-%% SET code and image directories
+%% SET code directories
 % Directory where script and functions are stored
 toolsdir='/usr3/graduate/valpasq/Documents/Chapter1/Plot_code/Tools/';
 addpath(toolsdir);
@@ -14,7 +14,7 @@ addpath('/usr3/graduate/valpasq/Documents/Chapter1/Plot_code/Tools/export_fig/')
 codedir='/usr3/graduate/valpasq/Documents/Chapter1/Plot_code/Scripts/';
 addpath(codedir);
 
-% Directory containing time series of Landsat images
+%% SET directory containing time series of Landsat images
 %imagedir='/projectnb/buchans/students/valpasq/5km/p012r031/images/';
 
 %imagedir='/projectnb/landsat/projects/Massachusetts/p013r030/images/'
@@ -35,7 +35,7 @@ WRS='p189r017';
 %imagedir='/projectnb/landsat/projects/Vietnam/p125r053/images/';
 %WRS='p125r053';
 
-%% SPECIFY Save directory for plots and CSV files
+%% SPECIFY save directory for plots and CSV files
 savedir='/usr3/graduate/valpasq/Documents/Chapter1/figures/forest/';
 
 %% INPUTS: CONTROL PLOT INPUTS
@@ -44,22 +44,41 @@ savedir='/usr3/graduate/valpasq/Documents/Chapter1/figures/forest/';
 N_row = 2775 % row
 N_col = 4367 % column
 
-%% SPECIFY DATA TYPE 
+%% SPECIFY WHERE TO READ DATA FROM - Image or CSV
+csv_read='True';
 
-% CASE 1: stack with just 7 original bands + Fmask (8 bands)
-stk_n = '_stack'; % original stack format
-datatype='TC';  % need to transform to TC
-nbands=8;
-B_plotvec=[1 2 3];
+switch csv_read
+    case 'True'
+        clrx=csvread([savedir WRS '_' num2str(N_row) '-' num2str(N_col) '_clrx.csv']);
+        %clry=csvread([savedir WRS '_' num2str(N_row) '-' num2str(N_col) '_clry.csv'])
+        clry=csvread([savedir WRS '_' num2str(N_row) '-' num2str(N_col) '_clry_BGW.csv']);
+        
+        datatype='TC';
+        B_plotvec=[1 2 3];
+        
+    case 'False'
+        % Read input data from images
+        
+        % CASE 1: stack with just 7 original bands + Fmask (8 bands)
+        stk_n = '_stack'; % original stack format
+        datatype='TC';  % need to transform to TC
+        nbands=8;
+        B_plotvec=[1 2 3];
+        
+        % CASE 2: stack that includes 7 bands + BGW + Fmask (11 bands)
+        %stk_n = '_all';  % stacked with BGW - 10 bands total, use 'band' option
+        %datatype='band';  % TC band available in stack - direct read
+        %nbands=11;
+        %B_plotvec=[8 9 10];
+        
+        % SPECIFY whether to use multitemporal cloud masking procedure
+        multitempcloud='off';
+        
+end
 
-% CASE 2: stack that includes 7 bands + BGW + Fmask (11 bands)
-%stk_n = '_all';  % stacked with BGW - 10 bands total, use 'band' option
-%datatype='band';  % TC band available in stack - direct read
-%nbands=11;
-%B_plotvec=[8 9 10];
 
-% SPECIFY whether to use multitemporal cloud masking procedure
-multitempcloud='off';
+
+%% PLOTTING SPECIFICATIONS
 
 % SPECIFY plot attributes:
 markcolor='k'; % marker color for solid plots
@@ -83,14 +102,14 @@ thresh=5000;
 % Specify TS plot style and DOY plot style
 
 %TSplottype='solid';   % all observations one color
-%TSplottype='years';   % observations symbolized by year
-TSplottype='months'; % observations symbolized by month
+TSplottype='years';   % observations symbolized by year
+%TSplottype='months'; % observations symbolized by month
 %TSplottype='seasons'; % observations symbolized by season
 %TSplottype='thresh';   % observations symbolized based on fixed threshhold
 
 %DOYplottype='black';   % one panel, all points in black
-%DOYplottype='years';   % one panel, symbolized by year
-DOYplottype='months'; % observations symbolized by month
+DOYplottype='years';   % one panel, symbolized by year
+%DOYplottype='months'; % observations symbolized by month
 %DOYplottype='seasons';  % one panel, symbolized by season
 
 % OUTPUT:
@@ -98,79 +117,81 @@ DOYplottype='months'; % observations symbolized by month
 plotout='separate';
 
 
-%% READ in X data (image dates) and Y data (reflectance values)
-[sdate,line_t,num_t] = ...
-    CCDC_XYRead(codedir,imagedir,N_row,N_col,stk_n,nbands);
-
-%% MASK Step 1 (Fmask and physical constraints)
-[clrx, clry, idgood, cloudy_x, cloudy_y, shadow_x, shadow_y,...
-    snow_x, snow_y, line_m] = CCDC_XYMask1_1(num_t,line_t,nbands,sdate);
-
-%[clrx,clry,idgood] = CCDC_XYMask1(num_t,line_t,nbands,sdate);
-
-%% Prepare input data
-
-switch datatype
-    
-    case 'band'
-        switch multitempcloud
-            case 'on'
-                [timeseries,cloudx,cloudy,rfit_B2,rfit_B5] = ...
-                    CCDC_XYMask2(clrx,clry,nbands);
-                idgood= timeseries(:,1) > -9999;
-                clrx=clrx(idgood);
-                clry=clry(idgood,:);
+switch csv_read
+    case 'False' % Read in image data    
+        %% READ in X data (image dates) and Y data (reflectance values)
+        [sdate,line_t,num_t] = ...
+            CCDC_XYRead(codedir,imagedir,N_row,N_col,stk_n,nbands);
+        
+        %% MASK Step 1 (Fmask and physical constraints)
+        [clrx, clry, idgood, cloudy_x, cloudy_y, shadow_x, shadow_y,...
+            snow_x, snow_y, line_m] = CCDC_XYMask1_1(num_t,line_t,nbands,sdate);
+        
+        %[clrx,clry,idgood] = CCDC_XYMask1(num_t,line_t,nbands,sdate);
+        
+        %% Prepare input data
+        
+        switch datatype
+            case 'band'
+                switch multitempcloud
+                    case 'on'
+                        [timeseries,cloudx,cloudy,rfit_B2,rfit_B5] = ...
+                            CCDC_XYMask2(clrx,clry,nbands);
+                        idgood= timeseries(:,1) > -9999;
+                        clrx=clrx(idgood);
+                        clry=clry(idgood,:);
+                        
+                    case 'off'
+                end
                 
-            case 'off'
-        end      
-        
-    case 'TC'
-        % SPECIFY tasseled cap coefficients (for TC plot)
-        %TC_input='DN';
-        %TC_input='TOA_Reflect';
-        TC_input='Surf_Reflect';
-        
-        [Brightness,Greenness,Wetness,Fourth,Fifth,Sixth] = ...
-            TasseledCap(clry,TC_input);
-        
-        dummy=zeros(length(Brightness),1);
-        clry_TC=[Brightness Greenness Wetness Fourth Fifth Sixth dummy];
-        
-        switch multitempcloud
-            case 'on'
-                [timeseries,cloudx,cloudy,rfit_B2,rfit_B5] = ...
-                    CCDC_XYMask2(clrx,clry,nbands);
-                idgood= timeseries(:,1) > -9999;
-                clrx=clrx(idgood);
-                clry=clry_TC(idgood,:);
+            case 'TC'
+                % SPECIFY tasseled cap coefficients (for TC plot)
+                %TC_input='DN';
+                %TC_input='TOA_Reflect';
+                TC_input='Surf_Reflect';
                 
-            case 'off'
-                clry_orig=clry;
-                clry=clry_TC;
+                [Brightness,Greenness,Wetness,Fourth,Fifth,Sixth] = ...
+                    TasseledCap(clry,TC_input);
+                
+                dummy=zeros(length(Brightness),1);
+                clry_TC=[Brightness Greenness Wetness Fourth Fifth Sixth dummy];
+                
+                switch multitempcloud
+                    case 'on'
+                        [timeseries,cloudx,cloudy,rfit_B2,rfit_B5] = ...
+                            CCDC_XYMask2(clrx,clry,nbands);
+                        idgood= timeseries(:,1) > -9999;
+                        clrx=clrx(idgood);
+                        clry=clry_TC(idgood,:);
+                        
+                    case 'off'
+                        clry_orig=clry;
+                        clry=clry_TC;
+                end
+                
         end
         
+        %% Extract fmask values for reporting # observation stats
+        fmask_all=(line_m<255);
+        fmask_clear=(line_m<2);
+        
+        fmask_all=line_m(fmask_all);
+        fmask_clear=line_m(fmask_clear);      
 end
 
-%% Calculate DOY & Year & Month
-doy=clrx-datenum(year(clrx),1,1)+1;
-obs_year=year(clrx);
-obs_month=month(clrx);
+        %% Calculate DOY & Year & Month
+        doy=clrx-datenum(year(clrx),1,1)+1;
+        obs_year=year(clrx);
+        obs_month=month(clrx);
+              
+        %% Separate data seasonsally
+        
+        % SPECIFY growing season start & end
+        spr_early=120;
+        spr_late=150;
+        fall_early=280;
+        fall_late=310;
 
-
-%% Extract fmask values for reporting # observation stats
-fmask_all=(line_m<255);
-fmask_clear=(line_m<2);
-
-fmask_all=line_m(fmask_all);
-fmask_clear=line_m(fmask_clear);
-
-%% Separate data seasonsally
-
-% SPECIFY growing season start & end
-spr_early=120;
-spr_late=150;
-fall_early=280;
-fall_late=310;
 
 %% SEQUENTIAL DATE plot
 
@@ -342,6 +363,7 @@ for j=1:length(B_plotvec)
         case 'combined'
             figure(j)
             subplot(1,6,[5,6])
+            set(gca,'YTickLabel',[]);
             
         case 'separate'
             figure()
@@ -349,7 +371,6 @@ for j=1:length(B_plotvec)
     end
             
     set(gca,'FontSize',20)%,'FontWeight','bold')
-    
     
     switch DOYplottype
         case 'months'
@@ -371,7 +392,6 @@ for j=1:length(B_plotvec)
         
         case 'years'
             hold on
-            %set(gca,'YTickLabel',[]);
             colormap(jet(range(1980:2016)));
             color_tab=(jet(range(1980:2016)));
             
@@ -393,26 +413,19 @@ for j=1:length(B_plotvec)
             
             %plot(gedateDOY,B_min:B_max,'m-')
             
-            %colorbar
-            %h = colorbar;
-            %set(h,'fontsize',16);
+            colorbar
+            h = colorbar;
+            set(h,'fontsize',16);
             
-            %ylabel(h, ['Years since ',num2str(year_i)],'FontSize',20)
-            
-            xlabel('Day of Year','FontSize',18,'FontWeight','bold','Color','k')
-            xlim([0 365])
-            ylim(yrange)
+            ylabel(h, ['Years since ',num2str(year_i)],'FontSize',20)      
         
         case 'black'
             hold on
             set(gca,'YTickLabel',[]);
             plot(doy,clry(:,B_plot),'ko','Markersize',6,'MarkerFaceColor',markcolor)
-            xlim([0 365])
-            plot(0:365,0,'r-','LineWidth',2)
             
         case 'seasons'
             hold on
-            %set(gca,'YTickLabel',[]);
             for i=1:length(doy)
                 if doy(i) > fall_late || doy(i) <= spr_early
                     plot(doy(i),clry(i,B_plot),'bo','Markersize',6,'MarkerFaceColor','b')
@@ -421,84 +434,90 @@ for j=1:length(B_plotvec)
                 else plot(doy(i),clry(i,B_plot),'ko','Markersize',6')
                 end
             end
-            xlabel('Day of Year','FontSize',18,'FontWeight','bold','Color','k')
-            xlim([0 365])
-            ylim(yrange)
-            plot(0:365,0,'r-','LineWidth',2)
             
             %plot(gedateDOY,B_min:B_max,'m-')
-            
             %plot(spr_early,B_min:B_max,'b-')
             %plot(spr_late,B_min:B_max,'g-')
             %plot(fall_early,B_min:B_max,'g-')
             %plot(fall_late,B_min:B_max,'b-')
-                
+            
     end
     
-    switch datatype
-        case 'band'
-            B_num=B_plot;
-            if B_plot==6
-                B_num=7;
-            elseif B_plot==7
-                B_num=6;
-            end
+    xlabel('Day of Year','FontSize',18,'FontWeight','bold','Color','k')
+    xlim([0 365])
+    ylim(yrange)
+    plot(0:365,0,'r-','LineWidth',2)
+    
+    
+    switch plotout
+        case 'separate'
             
-            if B_num == 6
-                %ylabel(['Band ',num2str(B_num),' Brightness Temperature (^oCX10^2)']);
-            elseif B_plot == 8
-                ylabel('TC Brightness x 10000','FontSize',20,'FontWeight','bold','Color','k');
-                %text(5,9500,['Total observations (',num2str(min(obs_year)),'-',...
-                %    num2str(max(obs_year)),') = ',num2str(length(fmask_all))],'FontSize', 16)
-                %text(5,9000,['Clear observations = ',num2str(length(fmask_clear))],'FontSize', 16)    
-            elseif B_plot == 9
-                ylabel('TC Greenness x 10000','FontSize',20,'FontWeight','bold','Color','k');
-                %text(5,4500,['Total observations (',num2str(min(obs_year)),'-',...
-                %    num2str(max(obs_year)),') = ',num2str(length(fmask_all))],'FontSize', 16)
-                %text(5,4200,['Clear observations = ',num2str(length(fmask_clear))],'FontSize', 16)                
-            elseif B_plot == 10
-                ylabel('TC Wetness x 10000','FontSize',20,'FontWeight','bold','Color','k');
-                %text(5,-4200,['Total observations (',num2str(min(obs_year)),'-',...
-                %    num2str(max(obs_year)),') = ',num2str(length(fmask_all))],'FontSize', 16)
-                %text(5,-4500,['Clear observations = ',num2str(length(fmask_clear))],'FontSize', 16)  
-            else
-                %ylabel(['Band ',num2str(B_num),' Surface Reflectance (X10^4)']);
-            end
-              
-        case 'TC'
-            if B_plot == 1
-                ylabel('TC Brightness x 10000','FontSize',20,'FontWeight','bold','Color','k');
-                
-                % Number of observations reporting
-                %text(5,9500,['Total observations (',num2str(min(obs_year)),'-',...
-                %    num2str(max(obs_year)),') = ',num2str(length(fmask_all))],'FontSize', 16)
-                %text(5,9000,['Clear observations = ',num2str(length(fmask_clear))],'FontSize', 16)
-                
-            elseif B_plot == 2
-                ylabel('TC Greenness x 10000','FontSize',20,'FontWeight','bold','Color','k');
-                
-                % Number of observations reporting
-                %text(5,4500,['Total observations (',num2str(min(obs_year)),'-',...
-                %    num2str(max(obs_year)),') = ',num2str(length(fmask_all))],'FontSize', 16)
-                %text(5,4200,['Clear observations = ',num2str(length(fmask_clear))],'FontSize', 16) 
-                
-            elseif B_plot == 3
-                ylabel('TC Wetness x 10000','FontSize',20,'FontWeight','bold','Color','k');
-                
-                % Number of observations reporting
-                %text(5,-4200,['Total observations (',num2str(min(obs_year)),'-',...
-                %    num2str(max(obs_year)),') = ',num2str(length(fmask_all))],'FontSize', 16)
-                %text(5,-4500,['Clear observations = ',num2str(length(fmask_clear))],'FontSize', 16)                
-            elseif B_plot == 4
-                ylabel('TC Fourth x 10000');
-            elseif B_plot == 5
-                ylabel('TC Fifth x 10000');
-            elseif B_plot == 6
-                ylabel('TC Sixth x 10000');
-            elseif B_plot == 7
-                ylabel('NO DATA!!');
+            switch datatype
+                case 'band'
+                    B_num=B_plot;
+                    if B_plot==6
+                        B_num=7;
+                    elseif B_plot==7
+                        B_num=6;
+                    end
+                    
+                    if B_num == 6
+                        %ylabel(['Band ',num2str(B_num),' Brightness Temperature (^oCX10^2)']);
+                    elseif B_plot == 8
+                        ylabel('TC Brightness x 10000','FontSize',20,'FontWeight','bold','Color','k');
+                        %text(5,9500,['Total observations (',num2str(min(obs_year)),'-',...
+                        %    num2str(max(obs_year)),') = ',num2str(length(fmask_all))],'FontSize', 16)
+                        %text(5,9000,['Clear observations = ',num2str(length(fmask_clear))],'FontSize', 16)
+                    elseif B_plot == 9
+                        ylabel('TC Greenness x 10000','FontSize',20,'FontWeight','bold','Color','k');
+                        %text(5,4500,['Total observations (',num2str(min(obs_year)),'-',...
+                        %    num2str(max(obs_year)),') = ',num2str(length(fmask_all))],'FontSize', 16)
+                        %text(5,4200,['Clear observations = ',num2str(length(fmask_clear))],'FontSize', 16)
+                    elseif B_plot == 10
+                        ylabel('TC Wetness x 10000','FontSize',20,'FontWeight','bold','Color','k');
+                        %text(5,-4200,['Total observations (',num2str(min(obs_year)),'-',...
+                        %    num2str(max(obs_year)),') = ',num2str(length(fmask_all))],'FontSize', 16)
+                        %text(5,-4500,['Clear observations = ',num2str(length(fmask_clear))],'FontSize', 16)
+                    else
+                        %ylabel(['Band ',num2str(B_num),' Surface Reflectance (X10^4)']);
+                    end
+                    
+                case 'TC'
+                    if B_plot == 1
+                        ylabel('TC Brightness x 10000','FontSize',20,'FontWeight','bold','Color','k');
+                        
+                        % Number of observations reporting
+                        %text(5,9500,['Total observations (',num2str(min(obs_year)),'-',...
+                        %    num2str(max(obs_year)),') = ',num2str(length(fmask_all))],'FontSize', 16)
+                        %text(5,9000,['Clear observations = ',num2str(length(fmask_clear))],'FontSize', 16)
+                        
+                    elseif B_plot == 2
+                        ylabel('TC Greenness x 10000','FontSize',20,'FontWeight','bold','Color','k');
+                        
+                        % Number of observations reporting
+                        %text(5,4500,['Total observations (',num2str(min(obs_year)),'-',...
+                        %    num2str(max(obs_year)),') = ',num2str(length(fmask_all))],'FontSize', 16)
+                        %text(5,4200,['Clear observations = ',num2str(length(fmask_clear))],'FontSize', 16)
+                        
+                    elseif B_plot == 3
+                        ylabel('TC Wetness x 10000','FontSize',20,'FontWeight','bold','Color','k');
+                        
+                        % Number of observations reporting
+                        %text(5,-4200,['Total observations (',num2str(min(obs_year)),'-',...
+                        %    num2str(max(obs_year)),') = ',num2str(length(fmask_all))],'FontSize', 16)
+                        %text(5,-4500,['Clear observations = ',num2str(length(fmask_clear))],'FontSize', 16)
+                    elseif B_plot == 4
+                        ylabel('TC Fourth x 10000');
+                    elseif B_plot == 5
+                        ylabel('TC Fifth x 10000');
+                    elseif B_plot == 6
+                        ylabel('TC Sixth x 10000');
+                    elseif B_plot == 7
+                        ylabel('NO DATA!!');
+                    end
             end
     end
+    
     
     grid on
     
@@ -531,17 +550,20 @@ cd(savedir)
 
 %% Save CSV
 
-switch datatype
-    case 'band'
-        csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clrx.csv'],clrx)
-        csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clry.csv'],clry(:, 1:7))
-        csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clry_BGW.csv'],clry(:, 8:10))
-        
-    case 'TC'
-        csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clrx.csv'],clrx)
-        csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clry.csv'],clry_orig(:, 1:7))
-        csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clry_BGW.csv'],clry(:, 1:3))
+switch csv_read
+    case 'False'
+        switch datatype
+            case 'band'
+                csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clrx.csv'],clrx)
+                csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clry.csv'],clry(:, 1:7))
+                csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clry_BGW.csv'],clry(:, 8:10))                
+            case 'TC'
+                csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clrx.csv'],clrx)
+                csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clry.csv'],clry_orig(:, 1:7))
+                csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clry_BGW.csv'],clry(:, 1:3))
+        end
 end
+
 
 
 %% SAVE plots
@@ -554,6 +576,6 @@ end
 
 close all
 
-%clear
+clear
 
 

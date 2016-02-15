@@ -7,18 +7,18 @@
 
 %% SET code directories
 % Directory where script and functions are stored
-toolsdir='/usr3/graduate/valpasq/Documents/Chapter1/Plot_code/Tools/';
+toolsdir='/usr3/graduate/valpasq/Documents/2016_ImageryEcology/Plot_code/Tools/';
 addpath(toolsdir);
-addpath('/usr3/graduate/valpasq/Documents/Chapter1/Plot_code/Tools/export_fig/');
+addpath('/usr3/graduate/valpasq/Documents/2016_ImageryEcology/Plot_code/Tools/export_fig/');
 
-codedir='/usr3/graduate/valpasq/Documents/Chapter1/Plot_code/Scripts/';
+codedir='/usr3/graduate/valpasq/Documents/2016_ImageryEcology/Plot_code/Scripts/';
 addpath(codedir);
 
 %% SET directory containing time series of Landsat images
 %imagedir='/projectnb/buchans/students/valpasq/5km/p012r031/images/';
 
-%imagedir='/projectnb/landsat/projects/Massachusetts/p013r030/images/'
-%WRS='p013r030';
+imagedir='/projectnb/landsat/projects/Massachusetts/p012r031/images/'
+WRS='p012r031';
 
 %imagedir='/projectnb/landsat/projects/CMS/stacks/Colombia/p008r056/images/'
 %WRS='p008r056';
@@ -29,23 +29,23 @@ addpath(codedir);
 %imagedir='/projectnb/landsat/projects/Colombia/images/006060/images/'
 %WRS='p006r060'; 
 
-imagedir='/projectnb/landsat/projects/Finland/189017/images/';
-WRS='p189r017';
+%imagedir='/projectnb/landsat/projects/Finland/189017/images/';
+%WRS='p189r017';
 
 %imagedir='/projectnb/landsat/projects/Vietnam/p125r053/images/';
 %WRS='p125r053';
 
 %% SPECIFY save directory for plots and CSV files
-savedir='/usr3/graduate/valpasq/Documents/Chapter1/figures/forest/';
+savedir='/usr3/graduate/valpasq/plots/wetlands/';
 
 %% INPUTS: CONTROL PLOT INPUTS
 
 % SPECIFY Pixel coordinates
-N_row = 2775 % row
-N_col = 4367 % column
+N_row = 4545 % row
+N_col = 4576 % column
 
 %% SPECIFY WHERE TO READ DATA FROM - Image or CSV
-csv_read='True';
+csv_read='False';
 
 switch csv_read
     case 'True'
@@ -60,19 +60,19 @@ switch csv_read
         % Read input data from images
         
         % CASE 1: stack with just 7 original bands + Fmask (8 bands)
-        stk_n = '_stack'; % original stack format
-        datatype='TC';  % need to transform to TC
-        nbands=8;
-        B_plotvec=[1 2 3];
+        %stk_n = '_stack'; % original stack format
+        %datatype='TC';  % need to transform to TC
+        %nbands=8;
+        %B_plotvec=[1 2 3];
         
         % CASE 2: stack that includes 7 bands + BGW + Fmask (11 bands)
-        %stk_n = '_all';  % stacked with BGW - 10 bands total, use 'band' option
-        %datatype='band';  % TC band available in stack - direct read
-        %nbands=11;
-        %B_plotvec=[8 9 10];
+        stk_n = '_all';  % stacked with BGW - 10 bands total, use 'band' option
+        datatype='band';  % TC band available in stack - direct read
+        nbands=11;
+        B_plotvec=[8 9 10];
         
         % SPECIFY whether to use multitemporal cloud masking procedure
-        multitempcloud='off';
+        multitempcloud='on';
         
 end
 
@@ -88,9 +88,9 @@ markcolor='k'; % marker color for solid plots
 geplot='off';
 
 % SPECIFY dates for any Google Earth (validation) images
-gedate=datenum('03/09/1995');  % add vertical line for a particular date (1)
-gedate2=datenum('07/28/2007'); % add vertical line for a particular date (2)
-gedate3=datenum('08/30/2012');
+gedate=datenum('04/02/1995');  % add vertical line for a particular date (1)
+gedate2=datenum('07/06/2003'); % add vertical line for a particular date (2)
+gedate3=datenum('07/04/2014');
 %gedate4=datenum('09/11/2014');
 %gedateDOY=237
 
@@ -102,9 +102,9 @@ thresh=5000;
 % Specify TS plot style and DOY plot style
 
 %TSplottype='solid';   % all observations one color
-TSplottype='years';   % observations symbolized by year
+%TSplottype='years';   % observations symbolized by year
 %TSplottype='months'; % observations symbolized by month
-%TSplottype='seasons'; % observations symbolized by season
+TSplottype='seasons'; % observations symbolized by season
 %TSplottype='thresh';   % observations symbolized based on fixed threshhold
 
 %DOYplottype='black';   % one panel, all points in black
@@ -113,8 +113,8 @@ DOYplottype='years';   % one panel, symbolized by year
 %DOYplottype='seasons';  % one panel, symbolized by season
 
 % OUTPUT:
-%plotout='combined';
-plotout='separate';
+plotout='combined';
+%plotout='separate';
 
 
 switch csv_read
@@ -202,7 +202,7 @@ for j=1:length(B_plotvec)
     if B_plot==1 || B_plot==8
         yrange=[0 10000]; % y axis limits
     elseif B_plot==2 || B_plot==9
-        yrange=[-1000 5000];
+        yrange=[-500 2500];
     elseif B_plot==3 || B_plot ==10
         yrange=[-5000 1000];
     end
@@ -569,9 +569,9 @@ end
 %% SAVE plots
 switch plotout
     case 'combined'
-        %SaveAllFigures_TC_Combined
+        SaveAllFigures_TC_Combined
     case 'separate'
-        %SaveAllFigures_TC_separate
+        SaveAllFigures_TC_separate
 end
 
 close all

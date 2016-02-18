@@ -1,5 +1,4 @@
 # 2016_ImageryEcology
-[![DOI](https://zenodo.org/badge/20334/valpasq/2016_ImageryEcology.svg)](https://zenodo.org/badge/latestdoi/20334/valpasq/2016_ImageryEcology)
 
 Code and plots for 2016 paper "From Imagery to Ecology"
 

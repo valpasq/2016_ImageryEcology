@@ -17,7 +17,7 @@ addpath(codedir);
 %% SET directory containing time series of Landsat images
 %imagedir='/projectnb/buchans/students/valpasq/5km/p012r031/images/';
 
-imagedir='/projectnb/landsat/projects/Massachusetts/p012r031/images/'
+%imagedir='/projectnb/landsat/projects/Massachusetts/p011r031/images/'
 WRS='p012r031';
 
 %imagedir='/projectnb/landsat/projects/CMS/stacks/Colombia/p008r056/images/'
@@ -36,16 +36,16 @@ WRS='p012r031';
 %WRS='p125r053';
 
 %% SPECIFY save directory for plots and CSV files
-savedir='/usr3/graduate/valpasq/plots/wetlands/';
+savedir='/usr3/graduate/valpasq/Documents/2016_ImageryEcology/figures/urban_gradient/';
 
 %% INPUTS: CONTROL PLOT INPUTS
 
 % SPECIFY Pixel coordinates
-N_row = 4545 % row
-N_col = 4576 % column
+N_row = 1842 % row
+N_col = 3711 % column
 
 %% SPECIFY WHERE TO READ DATA FROM - Image or CSV
-csv_read='False';
+csv_read='True';
 
 switch csv_read
     case 'True'
@@ -88,14 +88,14 @@ markcolor='k'; % marker color for solid plots
 geplot='off';
 
 % SPECIFY dates for any Google Earth (validation) images
-gedate=datenum('04/02/1995');  % add vertical line for a particular date (1)
-gedate2=datenum('07/06/2003'); % add vertical line for a particular date (2)
-gedate3=datenum('07/04/2014');
-%gedate4=datenum('09/11/2014');
-%gedateDOY=237
+gedate=datenum('08/18/2003');  % add vertical line for a particular date (1)
+gedate2=datenum('07/15/2008'); % add vertical line for a particular date (2)
+gedate3=datenum('04/30/2010');
+gedate4=datenum('09/11/2014');
+%gedateDOY=237;
 
 % SPECIFY threshold for 'thresh' plot
-B_thresh=8; % if B_thresh > thresh, change symbology, plot line
+B_thresh=1; % if B_thresh > thresh, change symbology, plot line
 thresh=5000;
 
 %% PLOTS
@@ -113,8 +113,8 @@ DOYplottype='years';   % one panel, symbolized by year
 %DOYplottype='seasons';  % one panel, symbolized by season
 
 % OUTPUT:
-plotout='combined';
-%plotout='separate';
+%plotout='combined';
+plotout='separate';
 
 
 switch csv_read
@@ -202,7 +202,7 @@ for j=1:length(B_plotvec)
     if B_plot==1 || B_plot==8
         yrange=[0 10000]; % y axis limits
     elseif B_plot==2 || B_plot==9
-        yrange=[-500 2500];
+        yrange=[-500 5000];
     elseif B_plot==3 || B_plot ==10
         yrange=[-5000 1000];
     end
@@ -210,8 +210,8 @@ for j=1:length(B_plotvec)
     switch plotout
         case 'combined'
             figure(j)
-            subplot(1,6,[1,2,3,4])
-            set(gcf,'Position',[0 500 1500 500]);
+            subplot(1,10,[1,2,3,4,5,6])
+            set(gcf,'Position',[0 500 2500 500]);
 
         case 'separate'
             figure()
@@ -295,7 +295,7 @@ for j=1:length(B_plotvec)
             plot(gedate,B_min:B_max,':m')
             plot(gedate2,B_min:B_max,':m')
             plot(gedate3,B_min:B_max,':m')
-            %plot(gedate4,B_min:B_max,':m')
+            plot(gedate4,B_min:B_max,':m')
         case 'off'
             
     end
@@ -307,8 +307,21 @@ for j=1:length(B_plotvec)
     t_min=min(clrx);
     plot(723181:t_max+30,0,'r-','LineWidth',2)
     
-    datetick('x');
+    %start = t_max;
+    %last = t_min;
+    %tk = datelist(start, last, 1:36);
+    %set(gca, 'xlim', [start last], 'xtick', tk)
+    %datetick('keepticks', 'keeplimits')
+    
+    %NumTicks = 8;
+    %set(gca,'XTick',linspace(t_min,t_max,NumTicks))
     xlim([723181 t_max])
+    datetick('x','keeplimits')
+    %
+    %L = get(gca,'XLim');
+
+
+    
     xlabel('Year','FontSize',18,'FontWeight','bold','Color','k')
     
     ylim(yrange)
@@ -362,12 +375,12 @@ for j=1:length(B_plotvec)
     switch plotout
         case 'combined'
             figure(j)
-            subplot(1,6,[5,6])
-            set(gca,'YTickLabel',[]);
+            subplot(1,10,[8,9,10])
+            %set(gca,'YTickLabel',[]);
             
         case 'separate'
             figure()
-            set(gcf,'Position',[0 0 500 500]);
+            set(gcf,'Position',[0 0 650 500]);
     end
             
     set(gca,'FontSize',20)%,'FontWeight','bold')
@@ -550,19 +563,19 @@ cd(savedir)
 
 %% Save CSV
 
-switch csv_read
-    case 'False'
-        switch datatype
-            case 'band'
-                csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clrx.csv'],clrx)
-                csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clry.csv'],clry(:, 1:7))
-                csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clry_BGW.csv'],clry(:, 8:10))                
-            case 'TC'
-                csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clrx.csv'],clrx)
-                csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clry.csv'],clry_orig(:, 1:7))
-                csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clry_BGW.csv'],clry(:, 1:3))
-        end
-end
+%switch csv_read
+%#    case 'False'
+%        switch datatype
+%            case 'band'
+%                csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clrx.csv'],clrx)
+%                csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clry.csv'],clry(:, 1:7))
+%                csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clry_BGW.csv'],clry(:, 8:10))                
+%            case 'TC'
+%                csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clrx.csv'],clrx)
+%                csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clry.csv'],clry_orig(:, 1:7))
+%                csvwrite([WRS '_' num2str(N_row) '-' num2str(N_col) '_clry_BGW.csv'],clry(:, 1:3))
+%        end
+%end
 
 
 

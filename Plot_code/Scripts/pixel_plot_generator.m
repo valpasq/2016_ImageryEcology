@@ -36,13 +36,13 @@ WRS='p012r031';
 %WRS='p125r053';
 
 %% SPECIFY save directory for plots and CSV files
-savedir='/usr3/graduate/valpasq/Documents/2016_ImageryEcology/figures/urban_gradient/';
+savedir='/usr3/graduate/valpasq/Documents/2016_ImageryEcology/figures/example/';
 
 %% INPUTS: CONTROL PLOT INPUTS
 
 % SPECIFY Pixel coordinates
-N_row = 1842 % row
-N_col = 3711 % column
+N_row = 1765 % row
+N_col = 3821 % column
 
 %% SPECIFY WHERE TO READ DATA FROM - Image or CSV
 csv_read='True';
@@ -84,15 +84,15 @@ end
 markcolor='k'; % marker color for solid plots
 
 % TURN VERTICAL DATE LINES ON/OFF
-%geplot='on';
-geplot='off';
+geplot='on';
+%geplot='off';
 
 % SPECIFY dates for any Google Earth (validation) images
-gedate=datenum('08/18/2003');  % add vertical line for a particular date (1)
-gedate2=datenum('07/15/2008'); % add vertical line for a particular date (2)
-gedate3=datenum('04/30/2010');
-gedate4=datenum('09/11/2014');
-%gedateDOY=237;
+gedate=datenum('08/25/2003');  % add vertical line for a particular date (1)
+%gedate2=datenum('07/28/2007'); % add vertical line for a particular date (2)
+%gedate3=datenum('04/30/2010');
+%gedate4=datenum('09/11/2014');
+gedateDOY=237;
 
 % SPECIFY threshold for 'thresh' plot
 B_thresh=1; % if B_thresh > thresh, change symbology, plot line
@@ -108,13 +108,13 @@ TSplottype='seasons'; % observations symbolized by season
 %TSplottype='thresh';   % observations symbolized based on fixed threshhold
 
 %DOYplottype='black';   % one panel, all points in black
-DOYplottype='years';   % one panel, symbolized by year
+%DOYplottype='years';   % one panel, symbolized by year
 %DOYplottype='months'; % observations symbolized by month
-%DOYplottype='seasons';  % one panel, symbolized by season
+DOYplottype='seasons';  % one panel, symbolized by season
 
 % OUTPUT:
-%plotout='combined';
-plotout='separate';
+plotout='combined';
+%plotout='separate';
 
 
 switch csv_read
@@ -225,6 +225,11 @@ for j=1:length(B_plotvec)
     B_min=min(yrange);
     t_max=max(clrx);
     
+    % Add red 0-axis
+    t_max=max(clrx);
+    t_min=min(clrx);
+    plot(723181:t_max+30,0,'k-','LineWidth',1)
+    
     switch TSplottype
         case 'seasons'
             for i=1:length(doy)
@@ -293,19 +298,14 @@ for j=1:length(B_plotvec)
     switch geplot
         case 'on'
             plot(gedate,B_min:B_max,':m')
-            plot(gedate2,B_min:B_max,':m')
-            plot(gedate3,B_min:B_max,':m')
-            plot(gedate4,B_min:B_max,':m')
+            %plot(gedate2,B_min:B_max,':m')
+            %plot(gedate3,B_min:B_max,':m')
+            %plot(gedate4,B_min:B_max,':m')
         case 'off'
             
     end
       
     grid on
-    
-    % Add red 0-axis
-    t_max=max(clrx);
-    t_min=min(clrx);
-    plot(723181:t_max+30,0,'r-','LineWidth',2)
     
     %start = t_max;
     %last = t_min;
@@ -385,7 +385,9 @@ for j=1:length(B_plotvec)
             
     set(gca,'FontSize',20)%,'FontWeight','bold')
     
+    plot(0:365, 0, 'k-','LineWidth', 1.5)
     switch DOYplottype
+     
         case 'months'
             hold on
             colormap(hsv(12));
@@ -421,16 +423,14 @@ for j=1:length(B_plotvec)
             end
             year_i=1980;
             
-            plot(0:365,0,'r-','LineWidth',2)
             %plot(0:365,thresh,'b-','LineWidth',1)
             
-            %plot(gedateDOY,B_min:B_max,'m-')
+            plot(gedateDOY,B_min:B_max,'m-')
             
-            colorbar
-            h = colorbar;
-            set(h,'fontsize',16);
-            
-            ylabel(h, ['Years since ',num2str(year_i)],'FontSize',20)      
+            %colorbar
+            %h = colorbar;
+            %set(h,'fontsize',16);
+            %ylabel(h, ['Years since ',num2str(year_i)],'FontSize',20)      
         
         case 'black'
             hold on
@@ -448,7 +448,7 @@ for j=1:length(B_plotvec)
                 end
             end
             
-            %plot(gedateDOY,B_min:B_max,'m-')
+            plot(gedateDOY,B_min:B_max,'m-')
             %plot(spr_early,B_min:B_max,'b-')
             %plot(spr_late,B_min:B_max,'g-')
             %plot(fall_early,B_min:B_max,'g-')
@@ -459,7 +459,6 @@ for j=1:length(B_plotvec)
     xlabel('Day of Year','FontSize',18,'FontWeight','bold','Color','k')
     xlim([0 365])
     ylim(yrange)
-    plot(0:365,0,'r-','LineWidth',2)
     
     
     switch plotout

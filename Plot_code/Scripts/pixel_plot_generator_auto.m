@@ -211,8 +211,8 @@ for j=1:length(B_plotvec)
     switch plotout
         case 'combined'
             figure(j)
-            subplot(1,10,[1,2,3,4,5,6])
-            set(gcf,'Position',[0 500 2500 500]);
+            subplot(1,6,[1,2,3,4])
+            set(gcf,'Position',[0 500 1500 500]);
 
         case 'separate'
             figure()
@@ -376,8 +376,8 @@ for j=1:length(B_plotvec)
     switch plotout
         case 'combined'
             figure(j)
-            subplot(1,10,[8,9,10])
-            %set(gca,'YTickLabel',[]);
+            subplot(1,6,[5,6])
+            set(gca,'YTickLabel',[]);
             
         case 'separate'
             figure()
@@ -408,6 +408,7 @@ for j=1:length(B_plotvec)
         
         case 'years'
             hold on
+            set(gca,'YTickLabel',[]);
             colormap(jet(range(1980:2016)));
             color_tab=(jet(range(1980:2016)));
             

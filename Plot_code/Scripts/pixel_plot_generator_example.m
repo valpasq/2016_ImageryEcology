@@ -102,15 +102,15 @@ thresh=5000;
 % Specify TS plot style and DOY plot style
 
 %TSplottype='solid';   % all observations one color
-%TSplottype='years';   % observations symbolized by year
+TSplottype='years';   % observations symbolized by year
 %TSplottype='months'; % observations symbolized by month
-TSplottype='seasons'; % observations symbolized by season
+%TSplottype='seasons'; % observations symbolized by season
 %TSplottype='thresh';   % observations symbolized based on fixed threshhold
 
 %DOYplottype='black';   % one panel, all points in black
-%DOYplottype='years';   % one panel, symbolized by year
+DOYplottype='years';   % one panel, symbolized by year
 %DOYplottype='months'; % observations symbolized by month
-DOYplottype='seasons';  % one panel, symbolized by season
+%DOYplottype='seasons';  % one panel, symbolized by season
 
 % OUTPUT:
 plotout='combined';
